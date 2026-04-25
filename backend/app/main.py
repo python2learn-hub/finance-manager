@@ -2,9 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 from .routers import accounts, dashboard, files, transactions
 from .database import init_db
+
+APP_DIR = Path(__file__).resolve().parent
+STATIC_DIR = APP_DIR / "static"
 
 app = FastAPI(title="Finance Manager API", version="0.1.0")
 
@@ -16,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.include_router(accounts.router, prefix="/api/accounts", tags=["accounts"])
 app.include_router(transactions.router, prefix="/api/transactions", tags=["transactions"])
 app.include_router(files.router, prefix="/api/files", tags=["files"])
@@ -32,4 +36,4 @@ def health():
 
 @app.get("/")
 def index():
-    return FileResponse("app/static/index.html")
+    return FileResponse(STATIC_DIR / "index.html")

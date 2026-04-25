@@ -67,6 +67,14 @@
           <strong id="kpi-net">-</strong>
         </article>
         <article class="kpi">
+          <span>Savings Rate</span>
+          <strong id="kpi-savings">-</strong>
+        </article>
+        <article class="kpi">
+          <span>Avg Daily Spend</span>
+          <strong id="kpi-daily">-</strong>
+        </article>
+        <article class="kpi">
           <span>Transactions</span>
           <strong id="kpi-count">-</strong>
         </article>
@@ -76,6 +84,7 @@
         <section class="panel">
           <div class="section-title">
             <h2>Category Spend</h2>
+            <span id="category-count"></span>
           </div>
           <div id="category-bars" class="bars"></div>
         </section>
@@ -83,8 +92,26 @@
         <section class="panel">
           <div class="section-title">
             <h2>Monthly Cashflow</h2>
+            <span id="period-label"></span>
           </div>
           <canvas id="cashflow-chart" width="720" height="320"></canvas>
+        </section>
+      </section>
+
+      <section class="dashboard-grid secondary-grid">
+        <section class="panel">
+          <div class="section-title">
+            <h2>Top Merchants</h2>
+          </div>
+          <div id="merchant-list" class="merchant-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <h2>Daily Spend</h2>
+            <span id="largest-expense"></span>
+          </div>
+          <canvas id="daily-chart" width="720" height="260"></canvas>
         </section>
       </section>
 

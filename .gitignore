@@ -1,4 +1,6 @@
 backend/.venv/
 backend/**/__pycache__/
 backend/*.log
+backend/*.db
 backend/test-statement.xlsx
+backend/app/data/

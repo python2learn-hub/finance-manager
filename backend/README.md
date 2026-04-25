@@ -8,14 +8,19 @@ What it does
 - Create bank, credit card, wallet, cash, broker accounts.
 - Import statements from CSV, XLSX, XLSM, and best-effort PDF.
 - Auto-categorize transactions with simple rules.
-- Skip duplicate statement files.
+- Skip duplicate statement files and repeated rows.
 - Show dashboard KPIs:
   - total spend
   - income
   - net cashflow
+  - savings rate
+  - average daily spend
+  - largest expense
   - transaction count
   - category spend
   - monthly cashflow
+  - daily spend trend
+  - top merchants
   - recent transactions
 
 Run locally
@@ -77,8 +82,10 @@ Transaction Date, Date, Value Date
 Description, Narration, Particulars, Transaction Details
 Debit, Withdrawal, Dr
 Credit, Deposit, Cr
+Withdrawal Amt., Deposit Amt., Closing Balance
 Amount
 Merchant, Payee, Beneficiary
+Chq./Ref.No., Reference
 ```
 
 CSV template:

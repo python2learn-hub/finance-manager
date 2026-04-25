@@ -29,19 +29,23 @@ async def import_statement(account_id: int, file: UploadFile = File(...), db: Se
         source_file=file.filename,
         hash=file_hash,
         parsed_status="parsed",
+        period_start=min(row["txn_date"] for row in rows) if rows else None,
+        period_end=max(row["txn_date"] for row in rows) if rows else None,
     )
     db.add(statement)
     db.flush()
 
     created = 0
     skipped = 0
+    seen_checksums = set()
     for r in rows:
         checksum = parser.row_checksum(account_id, r)
-        if db.query(models.Transaction).filter_by(account_id=account_id, checksum=checksum).first():
+        if checksum in seen_checksums or db.query(models.Transaction).filter_by(account_id=account_id, checksum=checksum).first():
             skipped += 1
             continue
+        seen_checksums.add(checksum)
 
-        cat_name = categorize(r.get("narration"), r.get("merchant"))
+        cat_name = categorize(r.get("narration"), r.get("merchant"), r.get("direction"))
         cat_id = None
         if cat_name:
             cat = db.query(models.Category).filter_by(name=cat_name).first()
@@ -61,7 +65,13 @@ async def import_statement(account_id: int, file: UploadFile = File(...), db: Se
         created += 1
     statement.imported_count = created
     db.commit()
-    return {"imported": created, "skipped": skipped, "duplicate_file": False, "statement_id": statement.id}
+    return {
+        "imported": created,
+        "skipped": skipped,
+        "total_rows": len(rows),
+        "duplicate_file": False,
+        "statement_id": statement.id,
+    }
 
 
 @router.post("/import-csv")
