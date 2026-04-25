@@ -28,21 +28,27 @@ Run locally
 From the project root:
 
 ```powershell
+docker compose up --build
+```
+
+Open the React frontend:
+
+```text
+http://127.0.0.1:5173/
+```
+
+For backend-only development, start Postgres from the project root:
+
+```powershell
 docker compose up -d postgres
 ```
 
-From `backend`:
+Then from `backend`:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
-```
-
-Open:
-
-```text
-http://127.0.0.1:8000/
 ```
 
 API docs:

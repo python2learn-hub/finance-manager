@@ -4,3 +4,6 @@ backend/*.log
 backend/*.db
 backend/test-statement.xlsx
 backend/app/data/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/

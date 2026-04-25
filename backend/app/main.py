@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+import os
 
 from .routers import accounts, dashboard, files, transactions
 from .database import init_db
@@ -36,4 +37,4 @@ def health():
 
 @app.get("/")
 def index():
-    return FileResponse(STATIC_DIR / "index.html")
+    return RedirectResponse(os.getenv("FRONTEND_URL", "http://127.0.0.1:5173/"))

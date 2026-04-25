@@ -41,3 +41,14 @@ class TransactionView(BaseModel):
     category_name: Optional[str] = None
     source: Optional[str] = None
     tags: Optional[str] = None
+
+class CategoryOut(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class TransactionCategoryUpdate(BaseModel):
+    category_id: Optional[int] = None
+    category_name: Optional[str] = None

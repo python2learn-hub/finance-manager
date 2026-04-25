@@ -16,5 +16,36 @@ services:
       timeout: 5s
       retries: 20
 
+  backend:
+    build:
+      context: ./backend
+    container_name: fm-backend
+    environment:
+      DB_URL: postgresql+psycopg2://admin:admin@postgres:5432/finance_db
+      FRONTEND_URL: http://127.0.0.1:5173/
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: fm-frontend
+    environment:
+      BACKEND_PROXY_TARGET: http://backend:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    depends_on:
+      - backend
+
 volumes:
   pgdata:
+  frontend_node_modules:
