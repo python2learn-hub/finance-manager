@@ -19,6 +19,7 @@ class Statement(Base):
     source_file = Column(String)
     hash = Column(String, unique=True)
     parsed_status = Column(String, default="pending")
+    imported_count = Column(Integer, default=0)
 
 class Category(Base):
     __tablename__ = "categories"
@@ -42,6 +43,7 @@ class Transaction(Base):
     checksum = Column(String, index=True)
     is_recurring = Column(Boolean, default=False)
     tags = Column(String)
-    metadata = Column(JSON)
+    metadata_ = Column("metadata", JSON)
 
     account = relationship("Account", back_populates="transactions")
+    category = relationship("Category")
