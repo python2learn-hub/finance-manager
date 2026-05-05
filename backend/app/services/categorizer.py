@@ -1,6 +1,8 @@
 import re
 from typing import Optional
 
+
+
 RULES = [
     (r"salary|payroll|dividend|interest|refund|cashback|ach c|neft cr", "Income", {"credit", None}),
     (r"indian clearing corp|iccl|zerodha|groww|upstox|mutual fund|stocks?|sip|broker", "Investments", {"debit", None}),
